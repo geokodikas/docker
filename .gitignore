@@ -1,0 +1,4 @@
+*.jar
+logback.rest_docker.xml
+config.dist.json
+*.pbf
