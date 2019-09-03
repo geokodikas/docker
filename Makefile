@@ -1,5 +1,6 @@
 .PHONY: geokodikas db-production osm2pgsql
 all: geokodikas db-production osm2pgsql
+publish-all: geokodikas-publish db-production-publish osm2pgsql-publish
 
 geokodikas:
 	cd geokodikas; docker build -t geokodikas/geokodikas:master .
