@@ -95,6 +95,8 @@ job "geokodikas" {
   #
   #     https://www.nomadproject.io/docs/job-specification/group.html
   #
+
+
   group "geokodikas" {
     # The "count" parameter specifies the number of the task groups that should
     # be running under this group. This value must be non-negative and defaults
@@ -151,8 +153,17 @@ job "geokodikas" {
       size = 300
     }
 
+
+    #constraint {
+      #operator  = "distinct_hosts"
+      #value     = "true"
+    #}
+
     meta {
-      HASH = "de7289581d10d69dce084ca2fd0882e1"
+      #EXPORT_URL  = "https://rpm.ledfan.be/full_importbelgium.osm.pbf_0c1d93be05ce2ce87a59b65bda77767d__t8g6pyv3"
+      #EXPORT_HASH = "de7289581d10d69dce084ca2fd0882e1"
+      EXPORT_URL  = "https://rpm.ledfan.be/full_importbelgium.osm.pbf_5b2197033cc053c537957d72faa2fbf8__nvaymwo4"
+      EXPORT_HASH = "0d782ac1a1dea4d4ae8663ca7ea28d37"
     }
 
     task "db-production" {
@@ -164,27 +175,33 @@ job "geokodikas" {
           db = 5432
         }
 	force_pull = false
-        mounts = [
-        {
-          type = "volume"
-          target = "/var/lib/postgresql/data",
-          source = "db-production-pgdata-${NOMAD_META_HASH}"
-          readonly = false
-          volume_options {
-          }
-        }
+         volumes = [
+            # Use relative paths to rebind paths already in the allocation dir
+            #"relative/to/task:/also/in/container"
+            "postgres_data/:/var/lib/postgresql/data",
         ]
+        #mounts = [
+            #{
+              #type = "volume"
+              #target = "/var/lib/postgresql/data",
+              #source = "db-production-pgdata"
+              #readonly = false
+              #volume_options {
+              #}
+            #}
+        #]
       }
 
       env {
 	POSTGRES_PASSWORD = "geokodikas"
 	POSTGRES_USER     = "geokodikas"
 	POSTGRES_DB       = "geokodikas"
+        #PGDATA            = "/var/lib/postgresql/data/${NOMAD_META_EXPORT_HASH}"
       }
 
       resources {
         cpu    = 500 # 500 MHz
-        memory = 4000 # 256MB
+        memory = 3000 # 256MB
         network {
           port "db" {}
         }
@@ -192,7 +209,7 @@ job "geokodikas" {
 
       service {
         name = "db-production"
-        tags = ["global"]
+        tags = ["${NOMAD_META_EXPORT_HASH}"]
         port = "db"
         check {
           name     = "alive"
@@ -232,12 +249,12 @@ job "geokodikas" {
     "username": "geokodikas",
     "password": "geokodikas",
     "db_name": "geokodikas",
-    "host": "{{ range service "db-production" }}{{ .Address }}{{ end }}",
-    "port": "{{ range service "db-production" }}{{ .Port }}{{ end }}"
+    "host": "{{ range service (printf "%s.db-production" (env "NOMAD_META_EXPORT_HASH")) }}{{ .Address }}{{ end }}",
+    "port": "{{ range service (printf "%s.db-production" (env "NOMAD_META_EXPORT_HASH")) }}{{ .Port }}{{ end }}"
   },
   "import_from_export": {
-    "file_location": "https://rpm.ledfan.be/full_importbelgium.osm.pbf_0c1d93be05ce2ce87a59b65bda77767d__t8g6pyv3",
-    "file_md5sum": "de7289581d10d69dce084ca2fd0882e1",
+    "file_location": "{{ env "NOMAD_META_EXPORT_URL" }}",
+    "file_md5sum": "{{ env "NOMAD_META_EXPORT_HASH" }}",
     "try_import_on_http": true
   },
   "http": {
@@ -256,7 +273,7 @@ EOH
 
       resources {
         cpu    = 500 # 500 MHz
-        memory = 1000 # 256MB
+        memory = 3000 # 256MB
         network {
           port "http" {}
         }
@@ -264,7 +281,8 @@ EOH
 
       service {
         name = "geokodikas"
-        tags = ["urlprefix-/"]
+        tags = ["urlprefix-/", "live", "${NOMAD_META_EXPORT_HASH}"]
+        canary_tags = ["urlprefix-/canary strip=/canary", "canary", "${NOMAD_META_EXPORT_HASH}"]
         port = "http"
         check {
           name     = "alive"
