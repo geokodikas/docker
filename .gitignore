@@ -2,3 +2,5 @@
 logback.rest_docker.xml
 config.dist.json
 *.pbf
+Vagrantfile
+.vagrant
