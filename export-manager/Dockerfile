@@ -21,6 +21,5 @@ WORKDIR /opt/geokodikas
 EXPOSE 8080
 
 ENV DO_NOT_COMMIT_CONTAINER yes
-ENV POSTGIS_LOW_MEM yes
 
 CMD ["/opt/start-geokodikas.sh"]
