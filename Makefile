@@ -1,6 +1,6 @@
-.PHONY: geokodikas db-production osm2pgsql
-all: geokodikas db-production osm2pgsql
-publish-all: geokodikas-publish db-production-publish osm2pgsql-publish
+.PHONY: geokodikas db-production osm2pgsql export-manager
+all: geokodikas db-production osm2pgsql export-manager
+publish-all: geokodikas-publish db-production-publish osm2pgsql-publish export-manager-publish
 
 geokodikas:
 	cd geokodikas; docker build -t geokodikas/geokodikas:master .
@@ -19,3 +19,9 @@ osm2pgsql:
 
 osm2pgsql-publish:
 	docker push geokodikas/osm2pgsql:master
+
+export-manager:
+	cd export-manager; docker build -t geokodikas/export-manager:master .
+
+export-manager-publish:
+	docker push geokodikas/export-manager:master
