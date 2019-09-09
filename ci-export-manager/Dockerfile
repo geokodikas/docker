@@ -5,8 +5,6 @@ FROM openjdk:11-jre-slim
 ENV APPLICATION_USER root
 RUN mkdir -p /opt/geokodikas/ && \
     chown -R "$APPLICATION_USER" /opt/geokodikas
-#groupadd -r "$APPLICATION_USER" && \
-    #useradd -r -s /bin/false -g "$APPLICATION_USER" "$APPLICATION_USER" && \
 
 RUN apt-get update && \
     apt install -y --no-install-recommends netcat && \
@@ -21,5 +19,6 @@ WORKDIR /opt/geokodikas
 EXPOSE 8080
 
 ENV DO_NOT_COMMIT_CONTAINER yes
+ENV POSTGIS_LOW_MEM yes
 
 CMD ["/opt/start-geokodikas.sh"]

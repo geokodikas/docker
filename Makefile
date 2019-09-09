@@ -1,8 +1,9 @@
-.PHONY: geokodikas db-production osm2pgsql export-manager
-all: geokodikas db-production osm2pgsql export-manager
+.PHONY: geokodikas db-production osm2pgsql ci-export-manager
+all: geokodikas db-production osm2pgsql ci-export-manager
 publish-all: geokodikas-publish db-production-publish osm2pgsql-publish export-manager-publish
 
 geokodikas:
+	cp ../geokodikas/target/rest-api-jar-with-dependencies.jar geokodikas/
 	cd geokodikas; docker build -t geokodikas/geokodikas:master .
 
 geokodikas-publish:
@@ -20,8 +21,9 @@ osm2pgsql:
 osm2pgsql-publish:
 	docker push geokodikas/osm2pgsql:master
 
-export-manager:
-	cd export-manager; docker build -t geokodikas/export-manager:master .
+ci-export-manager:
+	cp ../geokodikas/target/ci-export-manager/from-yaml-jar-with-dependencies.jar ci-export-manager/
+	cd ci-export-manager; docker build -t geokodikas/ci-export-manager:master .
 
-export-manager-publish:
-	docker push geokodikas/export-manager:master
+ci-export-manager-publish:
+	docker push geokodikas/ci-export-manager:master
