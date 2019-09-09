@@ -6,13 +6,8 @@
         </encoder>
     </appender>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
-
-    <logger name="be.ledfan.geocoder.importer.processors" level="DEBUG"/>
-
-    <logger name="org.testcontainers" level="INFO"/>
-    <logger name="com.github.dockerjava" level="INFO"/>
 
 </configuration>
