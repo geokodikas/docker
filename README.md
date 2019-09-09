@@ -48,6 +48,9 @@ Geokodikas can be run using Docker.
    You can run the container again with the same command, this time the HTTP API will be started.
    The API can be reached at `http://localhost:8080`.
 
+ - [geokodikas/osm2pgsql](https://hub.docker.com/r/geokodikas/osm2pgsql)
+   Contains the [osm2pgsql](https://github.com/openstreetmap/osm2pgsql) tool used by the import pipeline.
+
 ### Docker-compose
 
 A more robust setup can be achieved using docker-compose. An example docker-compose fill
