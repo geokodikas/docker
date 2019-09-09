@@ -22,7 +22,7 @@ osm2pgsql-publish:
 	docker push geokodikas/osm2pgsql:master
 
 ci-export-manager:
-	cp ../geokodikas/target/ci-export-manager/from-yaml-jar-with-dependencies.jar ci-export-manager/
+	cp ../geokodikas/target/from-yaml-jar-with-dependencies.jar ci-export-manager/
 	cd ci-export-manager; docker build -t geokodikas/ci-export-manager:master .
 
 ci-export-manager-publish:
