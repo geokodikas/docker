@@ -6,13 +6,16 @@ FROM postgres:11
 ENV POSTGIS_MAJOR 2.5
 ENV POSTGIS_VERSION 2.5.2+dfsg-1~exp1.pgdg90+1
 
-RUN apt-get update \
-      && apt-cache showpkg postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
-      && apt-get install -y --no-install-recommends \
-           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR=$POSTGIS_VERSION \
-           postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts=$POSTGIS_VERSION \
-           postgis=$POSTGIS_VERSION \
-      && rm -rf /var/lib/apt/lists/*
+RUN echo "deb http://deb.debian.org/debian stretch-backports main" > /etc/apt/sources.list.d/stretch-backport.list \
+  && apt-get update \
+  && apt-cache showpkg postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR \
+  && apt-get -t stretch-backports install -y libsfcgal1 \
+  && apt-get install -y --no-install-suggests --no-install-recommends \
+       postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR=$POSTGIS_VERSION \
+       postgresql-$PG_MAJOR-postgis-$POSTGIS_MAJOR-scripts=$POSTGIS_VERSION \
+       postgis=$POSTGIS_VERSION \
+  && apt-get -y autoremove \
+  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /docker-entrypoint-initdb.d
 
