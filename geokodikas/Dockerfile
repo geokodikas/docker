@@ -12,7 +12,7 @@ RUN apt-get update && \
     apt install -y --no-install-recommends netcat postgresql-client && \
     rm -rf /var/lib/apt/lists/*
 
-COPY rest-api-jar-with-dependencies.jar logback.rest.xml config.json /opt/geokodikas/
+COPY http-api-jar-with-dependencies.jar logback.rest.xml config.json /opt/geokodikas/
 COPY ./wait-for ./start-geokodikas.sh /opt/
 
 USER $APPLICATION_USER

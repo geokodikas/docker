@@ -6,6 +6,6 @@ set -x
 echo "Starting geokodikas JAR..."
 cat config.json
 # TODO allow to override these options
-java -XX:InitialRAMPercentage=25 -XX:MaxRAMPercentage=75 -XX:+UseContainerSupport -jar rest-api-jar-with-dependencies.jar
+java -XX:InitialRAMPercentage=25 -XX:MaxRAMPercentage=75 -XX:+UseContainerSupport -jar http-api-jar-with-dependencies.jar
 
 

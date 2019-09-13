@@ -44,8 +44,8 @@ Geokodikas can be run using Docker.
    ```
    docker run --net=host -v $PWD/config.json:/opt/geokodikas/config.json -p 8080:8080 geokodikas/geokodikas:master
    ```
-   If the db doesn't contain an import, this container will download the `file_location` file and import it, after which it exists.
-   You can run the container again with the same command, this time the HTTP API will be started.
+   If the db doesn't contain an import, this container downloads the `file_location` file and import it, after which it exists.
+   You can run the container again with the same command, this time the HTTP API stats.
    The API can be reached at `http://localhost:8080`.
 
  - [geokodikas/osm2pgsql](https://hub.docker.com/r/geokodikas/osm2pgsql)
@@ -61,7 +61,7 @@ The `nomad/` directory contains some example configuration for Nomad.
 
 ### Way of importing
 
-The `geokodikas/geokodikas` docker container will read the `config.json` filled by Nomad.
+The `geokodikas/geokodikas` docker container reads the `config.json` filled by Nomad.
 This file may contain the following:
 ```
   "import_from_export": {
@@ -70,10 +70,10 @@ This file may contain the following:
     "try_import_on_http": true
   }
 ```
-When starting, geokodikas will read the `import_from_export_metadata` table and check whether the correct import is available in the DB.
-If there is no import available, geokodikas will download the configured file and start importing it in the database using `pg_restore`.
-After updating the metadata table, the process will exit. Nomad will then restart the container, which will then see the import is already available
-and then start the HTTP API.
+When starting, geokodikas checks in the `import_from_export_metadata` table whether the correct import is available in the DB.
+If there is no import available, geokodikas downloads the configured file and start importing it in the database using `pg_restore`.
+After updating the metadata table, the process exits. Nomad then restart the container, thereafter the container sees that the import is already available
+and thus starts the HTTP API.
 
 In the Nomad configuration file, the database to import can be configured using the [meta keys]{https://github.com/geokodikas/docker/blob/master/nomad/geokodikas.nomad#L54}.
 After changing these parameters, you can Nomad to run the new job using:
@@ -85,8 +85,8 @@ The import will first be performed in a canary allocation.
 
 ### Canary updates
 
-If you run a new plan, Nomad will create one new allocation with one canary.
-Fabio will make this instance available under the `/canary` URL.
+If you run a new plan, Nomad creates one new allocation with one canary.
+Fabio makes this instance available under the `/canary` URL.
 After testing whether this works, you can promote this canary version:
 ```
 nomad job promote geokodikas

@@ -12,7 +12,7 @@ RUN apt-get update && \
 
 
 COPY start-geokodikas.sh /opt
-COPY from-yaml-jar-with-dependencies.jar logback.pipeline.xml config.json /opt/geokodikas/
+COPY export-manager-jar-with-dependencies.jar logback.pipeline.xml config.json /opt/geokodikas/
 
 USER $APPLICATION_USER
 WORKDIR /opt/geokodikas

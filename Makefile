@@ -1,11 +1,11 @@
 .PHONY: geokodikas db-production db-import osm2pgsql ci-export-manager
 all: geokodikas db-production db-import osm2pgsql ci-export-manager
-publish-all: geokodikas-publish db-production-publish db-import-publish osm2pgsql-publish export-manager-publish
+publish-all: geokodikas-publish db-production-publish db-import-publish osm2pgsql-publish ci-export-manager-publish
 
 JAVA_TARGET_PATH ?= "../geokodikas/target"
 
 geokodikas:
-	cp "${JAVA_TARGET_PATH}/rest-api-jar-with-dependencies.jar" geokodikas/
+	cp "${JAVA_TARGET_PATH}/http-api-jar-with-dependencies.jar" geokodikas/
 	cd geokodikas; docker build -t geokodikas/geokodikas:master .
 
 geokodikas-publish:
@@ -30,7 +30,7 @@ osm2pgsql-publish:
 	docker push geokodikas/osm2pgsql:master
 
 ci-export-manager:
-	cp "${JAVA_TARGET_PATH}/from-yaml-jar-with-dependencies.jar" ci-export-manager/
+	cp "${JAVA_TARGET_PATH}/export-manager-jar-with-dependencies.jar" ci-export-manager/
 	cd ci-export-manager; docker build -t geokodikas/ci-export-manager:master .
 
 ci-export-manager-publish:
