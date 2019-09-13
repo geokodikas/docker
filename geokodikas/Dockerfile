@@ -13,7 +13,6 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 COPY http-api-jar-with-dependencies.jar logback.rest.xml config.json /opt/geokodikas/
-COPY ./wait-for ./start-geokodikas.sh /opt/
 
 USER $APPLICATION_USER
 WORKDIR /opt/geokodikas

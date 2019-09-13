@@ -13,8 +13,8 @@
     "port": "5432"
   },
   "import_from_export": {
-    "file_location": "https://19-206580440-gh.circle-artifacts.com/0/home/circleci/repo/artifacts/full_import_Belgium_17630c587d1a44832b1e4d5d345d2533__aaih3rnx",
-    "file_md5sum": "a765a92ffa00f83ff1baf9a361f52dd3",
+    "file_location": "https://26-206580440-gh.circle-artifacts.com/0/home/circleci/repo/artifacts/full_import_Belgium_aa5d00ccf8f47df8b1b9edb688f79912__pvbpusxs",
+    "file_md5sum": "381056e682d1768b3bdd2fa78fd3b56c",
     "try_import_on_http": true
   },
   "http": {
