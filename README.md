@@ -53,7 +53,15 @@ Geokodikas can be run using Docker.
 
 ### Docker-compose
 
-A more robust setup can be achieved using docker-compose. An example docker-compose fill
+A more robust setup can be achieved using docker-compose. An example docker-compose file is available in the [docker-compose directory](https://github.com/geokodikas/docker#docker-compose).
+```
+git clone https://github.com/geokodikas/docker
+cd docker/docker-compose
+docker-compose up -d db-production
+docker-compose up geokodikas # import the configured export
+docker-compose up geokodikas # really start the HTTP API
+```
+This directory contains a `config.json` file which imports Belgium into the database. After the import you should restart the geokodikas container again.
 
 ## Nomad
 

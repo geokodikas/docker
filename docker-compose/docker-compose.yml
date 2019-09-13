@@ -1,0 +1,25 @@
+version: '3'
+services:
+  db-production:
+    image: geokodikas/db-production:master
+    volumes:
+      - geokodikas_postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: "geokodikas"
+      POSTGRES_USER: "geokodikas"
+      POSTGRES_DB: "geokodikas"
+    ports:
+      - 5432:5432
+    shm_size: '512mb'
+    restart: on-failure
+  geokodikas:
+    image: geokodikas/geokodikas:master
+    volumes:
+     - ./config.json:/opt/geokodikas/config.json
+    ports:
+      - 8080:8080
+    links:
+     - db-production
+
+volumes:
+  geokodikas_postgres_data:

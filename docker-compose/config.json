@@ -1,0 +1,23 @@
+{
+  "importer": {
+    "output_threshold": 10000,
+    "max_queue_size": 1000000,
+    "num_processors": 8,
+    "processor_block_size": 10000
+  },
+  "database": {
+    "username": "geokodikas",
+    "password": "geokodikas",
+    "db_name": "geokodikas",
+    "host": "db-production",
+    "port": "5432"
+  },
+  "import_from_export": {
+    "file_location": "https://19-206580440-gh.circle-artifacts.com/0/home/circleci/repo/artifacts/full_import_Belgium_17630c587d1a44832b1e4d5d345d2533__aaih3rnx",
+    "file_md5sum": "a765a92ffa00f83ff1baf9a361f52dd3",
+    "try_import_on_http": true
+  },
+  "http": {
+    "public_url": "http://localhost:8080"
+  }
+}
