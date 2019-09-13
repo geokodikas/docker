@@ -14,6 +14,8 @@ RUN apt-get update && \
 
 COPY http-api-jar-with-dependencies.jar logback.rest.xml config.json /opt/geokodikas/
 
+COPY ./start-geokodikas.sh /opt/
+
 USER $APPLICATION_USER
 WORKDIR /opt/geokodikas
 EXPOSE 8080
