@@ -16,6 +16,7 @@ RUN apt-get update && \
       libbz2-dev libpq5 libpq-dev libproj13 libproj-dev git && \
     git clone git://github.com/openstreetmap/osm2pgsql.git && \
     cd osm2pgsql && \
+    git checkout 1.0.0 && \
     mkdir build && \
     cd build && \
     cmake .. -DCMAKE_BUILD_TYPE=Release -DWITH_LUA=OFF -DWITH_LUAJIT=OFF && \
